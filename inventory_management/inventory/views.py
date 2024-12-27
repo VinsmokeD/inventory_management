@@ -7,7 +7,7 @@ from .forms import UserRegisterForm, InventoryItemForm
 from .models import InventoryItem, Category
 from inventory_management.settings import LOW_QUANTITY
 from django.contrib import messages
-
+from django.contrib.auth import logout
 class Index(TemplateView):
 	template_name = 'inventory/index.html'
 
@@ -79,3 +79,7 @@ class DeleteItem(LoginRequiredMixin, DeleteView):
 	template_name = 'inventory/delete_item.html'
 	success_url = reverse_lazy('dashboard')
 	context_object_name = 'item'
+class LogoutView(View):
+    def get(self, request):
+        logout(request)  # Logs out the user
+        return redirect('index')  # Redirect to the homepage or desired page after logout
